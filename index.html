@@ -666,7 +666,7 @@ function renderSections(){
 
 renderSections();
 
-// =============== LOAD DATA DARI API (FIX OSS - Client Side Filter) ===============
+// =============== LOAD DATA DARI API (FIX OSS - SIMPLE VERSION) ===============
 async function loadData(sheetName){
     try{
         const res = await fetch(`${API_BASE}?sheet=${sheetName}`);
@@ -690,91 +690,18 @@ async function loadData(sheetName){
         document.querySelectorAll(`#${sectionId} .item select`).forEach(select => {
             select.innerHTML = '<option value="">--Pilih Item--</option>';
             
-            // Filter dengan handling case sensitive dan berbagai kemungkinan status
-            const aktifItems = data.filter(item => {
-                if (!item.status) return false;
-                const status = String(item.status).toLowerCase().trim();
-                return status === "aktif" || status === "active" || status === "tersedia";
-            });
+            // DEBUG: Tampilkan data di console
+            console.log(`${sheetName} data:`, data);
             
-            const ossItems = data.filter(item => {
-                if (!item.status) return false; // jika tidak ada status, jangan tampilkan
-                const status = String(item.status).toLowerCase().trim();
-                return status === "oss" || status === "out of stock" || status === "habis" || status === "kosong";
-            });
-            
-            // Tambah item aktif
-            aktifItems.forEach(item => {
+            // Loop semua data dengan logic sederhana
+            data.forEach(item => {
                 const opt = document.createElement("option");
                 opt.value = item.id;
-                opt.textContent = item.nama_produk;
+                opt.textContent = item.nama_produk || item.nama || 'No Name';
                 
-                // Simpan semua data ke dataset
-                Object.keys(item).forEach(key => {
-                    if(key !== "id" && key !== "nama_produk" && key !== "status") {
-                        opt.dataset[key] = item[key];
-                    }
-                });
+                // Check status - SIMPLE LOGIC
+                const status = String(item.status || '').toLowerCase().trim();
                 
-                select.appendChild(opt);
-            });
-            
-            // Tambah separator jika ada OSS items
-            if (ossItems.length > 0 && aktifItems.length > 0) {
-                const separator = document.createElement("option");
-                separator.disabled = true;
-                separator.textContent = "────────── OUT OF STOCK ──────────";
-                select.appendChild(separator);
-            }
-            
-            // Tambah OSS items (jika ada)
-            ossItems.forEach(item => {
-                const opt = document.createElement("option");
-                opt.value = item.id;
-                opt.textContent = item.nama_produk + " (OSS)";
-                opt.disabled = true;
-                opt.style.color = "#999";
-                opt.style.backgroundColor = "#f5f5f5";
-                opt.style.fontStyle = "italic";
-                
-                // Simpan data untuk harga (jika ada)
-                Object.keys(item).forEach(key => {
-                    if(key !== "id" && key !== "nama_produk" && key !== "status") {
-                        opt.dataset[key] = item[key];
-                    }
-                });
-                
-                select.appendChild(opt);
-            });
-        });
-    }catch(e){
-        console.error(`Gagal load data ${sheetName}:`, e);
-    }
-}
-
-// =============== INITIALIZE ===============
-window.addEventListener('DOMContentLoaded', function() {
-    // Load data produk
-    loadData("MESIN_CUCI");
-    loadData("MESIN_DRYER");
-    loadData("RAK_MESIN");
-    loadData("SISTEM_OPERASI");
-    loadData("INSTALASI");
-    loadData("PENUNJANG_INSTALASI");
-    loadData("PENUNJANG_PRODUKSI");
-    
-    // Load config dari URL jika ada
-    loadConfigFromURL();
-});
-
-// Close modal dengan ESC key
-document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-        closeModal();
-    }
-});
-</script>
-
-</body>
-</html>
-
+                if (status === 'oss' || status.includes('out') || status === 'habis' || status === 'kosong') {
+                    // ITEM OSS
+                    opt.disabled
