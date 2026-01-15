@@ -688,7 +688,7 @@ async function loadData(sheetName){
         if(!sectionId) return;
         
         document.querySelectorAll(`#${sectionId} .item select`).forEach(select => {
-            select.innerHTML = `<option value="">--Pilih Item--</option>`;
+            select.innerHTML = '<option value="">--Pilih Item--</option>';
             
             // Urutkan: aktif dulu, baru OSS
             const aktifItems = data.filter(item => item.status && item.status.toLowerCase() === "aktif");
