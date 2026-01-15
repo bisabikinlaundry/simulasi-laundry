@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAIPPUL V.1</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Poppins',sans-serif;}
+body{background:linear-gradient(90deg,#ac0cc0,#7ec9ff);padding:14px;}
+.app{max-width:390px;margin:auto}
+
+/* HEADER */
+.header{text-align:center;margin-bottom:20px}
+.header h1{font-size:20px;font-weight:800;color:#baeffa}
+.header h2{font-size:13px;font-weight:500;color:#000;margin-top:4px}
+.header p{font-size:13px;color:#baeffa;margin-top:6px}
+.header a{color:#4bcfe1;font-weight:600;text-decoration:none;border-bottom:1px dashed #4bcfe1}
+
+/* TOMBOL HEADER */
+.header-buttons{display:flex;justify-content:center;gap:8px;margin:12px 0 5px 0;flex-wrap:wrap}
+.header-btn{background:linear-gradient(135deg,#7ec9ff,#ac0cc0);border:none;color:white;padding:6px 12px;border-radius:15px;font-weight:600;font-size:11px;cursor:pointer;transition:all 0.3s;box-shadow:0 2px 5px rgba(0,0,0,0.2);white-space:nowrap}
+.header-btn:hover{transform:translateY(-2px);box-shadow:0 4px 8px rgba(0,0,0,0.3)}
+.header-btn.coming{opacity:0.6;cursor:not-allowed}
+
+/* SECTION */
+.section{background:rgba(186,239,250,.3);border-radius:8px;padding:14px;margin-bottom:14px}
+.section-title{text-align:center;font-weight:700;font-size:14px;color:#000;border-bottom:1px solid rgba(0,0,0,.15);padding-bottom:6px;margin-bottom:10px}
+.section-desc{text-align:center;font-size:12px;margin-bottom:10px}
+
+/* ITEM ROW */
+.item-row{display:flex;align-items:center;gap:6px;margin-bottom:8px}
+.qty{width:62px}
+.qty select{width:100%}
+.item{flex:1}
+.delete{width:48px;text-align:center}
+
+select,input{
+    width:100%;
+    padding:8px 10px;
+    border-radius:6px;
+    border:1px solid #ddd;
+    font-size:13px;
+    background:#fff;
+}
+
+/* OPTION DISABLED (OSS) */
+select option:disabled {
+    color: #999 !important;
+    background-color: #f5f5f5 !important;
+    font-style: italic !important;
+}
+
+/* BUTTONS */
+.btn-delete{background:#ff3131;color:#fff;border:none;width:100%;padding:8px 0;border-radius:6px;font-weight:700}
+.btn-add{display:block;margin:10px auto 0;background:#5e17eb;color:#fff;border:none;padding:8px 16px;border-radius:6px;font-weight:700}
+
+/* INPUT SINGLE */
+.single-input{width:85%;margin:0 auto}
+
+/* HITUNG */
+.btn-calc{display:block;margin:20px auto;width:85%;background:#4bcfe1;color:#fff;border:none;padding:12px;border-radius:8px;font-size:15px;font-weight:700}
+.btn-calc.recalculate{background:#ffd700;color:#000;}
+
+/* TOTAL */
+.total-box{background:rgba(255,255,255,.75);padding:16px;border-radius:10px;text-align:center}
+.total-box h3{font-size:16px;font-weight:800;margin-bottom:10px}
+.total-amount{background:#000;color:#fad156;font-size:28px;font-weight:800;padding:14px;border-radius:8px;margin-bottom:12px}
+.btn-send{background:#5e17eb;color:#fff;border:none;width:100%;padding:14px;border-radius:8px;font-size:15px;font-weight:800}
+
+/* MODAL POPUP */
+.modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.85);backdrop-filter:blur(5px);display:none;z-index:9999;align-items:center;justify-content:center}
+.modal-content{background:white;border-radius:15px;padding:20px;max-width:90%;max-height:90%;text-align:center;position:relative}
+.btn-close{position:absolute;top:10px;right:15px;background:none;border:none;font-size:24px;cursor:pointer;color:#666}
+.btn-close:hover{color:#000}
+.slider-image{max-width:100%;max-height:400px;border-radius:10px;margin:15px 0}
+.btn-pilih{background:linear-gradient(135deg,#5e17eb,#ac0cc0);color:white;border:none;padding:12px 30px;border-radius:25px;font-weight:700;margin:15px 0;cursor:pointer;font-size:14px}
+.slider-nav{display:flex;justify-content:center;align-items:center;gap:15px;margin-top:15px}
+.slider-dot{width:10px;height:10px;border-radius:50%;background:#ccc;cursor:pointer}
+.slider-dot.active{background:#5e17eb}
+.btn-nav{background:none;border:none;font-size:24px;cursor:pointer;color:#5e17eb}
+
+/* LOADING */
+.loading{text-align:center;padding:20px;color:#666}
+</style>
+</head>
+
+<body>
+<div class="app">
+
+<div class="header">
+    <h1>SIMULASI PAKET USAHA LAUNDRY</h1>
+    <h2>Sistem Aplikasi Perencanaan Paket Usaha Laundry (SAIPPUL)</h2>
+    
+    <div class="header-buttons">
+        <button class="header-btn" onclick="showPaketModal('siap')">PAKET SIAP LAUNCHING</button>
+        <button class="header-btn" onclick="showPaketModal('self')">PAKET SELF SERVICE</button>
+        <button class="header-btn coming">KALKULATOR LAUNDRY</button>
+    </div>
+    
+    <p>
+        Konsultasi perencanaan paket klik :
+        <a href="https://api.whatsapp.com/send?phone=628999191099" target="_blank">&lt;chatkami&gt;</a>
+    </p>
+</div>
+
+<!-- MODAL POPUP UNTUK PAKET -->
+<div id="modalPaket" class="modal-overlay">
+    <div class="modal-content">
+        <button class="btn-close" onclick="closeModal()">×</button>
+        <div id="modalLoading" class="loading">Memuat paket...</div>
+        <div id="modalContent" style="display:none;">
+            <img id="sliderImage" class="slider-image" src="" alt="Paket">
+            <button id="btnPilihPaket" class="btn-pilih" onclick="pilihPaketIni()">PILIH PAKET INI</button>
+            <div class="slider-nav">
+                <button class="btn-nav" onclick="prevSlide()">◀</button>
+                <div id="slideDots"></div>
+                <button class="btn-nav" onclick="nextSlide()">▶</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SECTION TEMPLATE -->
+<div class="section" id="mesin-cuci">
+<div class="section-title">KONFIGURASI MESIN CUCI</div>
+<div class="section-desc">Pilih mesin cuci sesuai kapasitas yang diinginkan</div>
+<div class="item-list">
+<div class="item-row">
+<div class="qty"><select>
+        <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+        <option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
+    </select></div>
+<div class="item">
+    <select class="select-item mesin-cuci">
+        <option value="">--Pilih Item--</option>
+    </select>
+</div>
+<div class="delete"><button class="btn-delete" onclick="deleteItem(this)">X</button></div>
+</div>
+</div>
+<button class="btn-add" onclick="addItem('mesin-cuci')">+ Tambah Item</button>
+</div>
+
+<!-- Sections lainnya akan dibuat oleh JavaScript -->
+<div id="dynamic-sections"></div>
+
+<div class="section">
+<div class="section-title">AKOMODASI & ONGKIR</div>
+<div class="section-desc">Masukkan nominal rupiah</div>
+<div class="single-input"><input type="text" id="ongkirInput" placeholder="--Masukkan nominal rupiah--"></div>
+</div>
+
+<div class="section">
+<div class="section-title">KODE PROMO</div>
+<div class="section-desc">Masukkan kode voucher yang berlaku</div>
+<div class="single-input"><input type="text" id="kodePromoInput" placeholder="--Masukkan kode voucher--"></div>
+</div>
+
+<button class="btn-calc" id="btnHitung">Hitung Total Paket</button>
+
+<div class="total-box">
+<h3>TOTAL PAKET</h3>
+<div class="total-amount" id="totalHarga">Rp 0,-</div>
+
+<button class="btn-send" onclick="kirimWhatsApp()">
+    KIRIM DRAFT KONFIGURASI PAKET
+</button>
+</div>
+
+</div>
+
+<script>
+// =============== GLOBAL VARIABLES ===============
+const API_BASE = "https://script.google.com/macros/s/AKfycbwRTTu00vdj8kZDocK98webkvEH4WZyKIAu3XF9MycfYO96Y3S0tqECGZCcNf6j5ns/exec";
+let dataSemuaSheet = {};
+let sudahDihitung = false;
+let currentConfigCode = null;
+
+// Modal slider variables
+let currentModalType = null;
+let currentSlideIndex = 0;
+let modalPaketData = [];
+
+// =============== FUNGSI UTAMA ===============
+function qtyOptions(){
+    return `
+<option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+<option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
+`;
+}
+
+function addItem(sectionId){
+    const list = document.querySelector(`#${sectionId} .item-list`);
+    const row = list.children[0].cloneNode(true);
+    row.querySelectorAll("select").forEach(s => s.selectedIndex = 0);
+    list.appendChild(row);
+}
+
+function deleteItem(btn){
+    const list = btn.closest(".item-list");
+    if(list.children.length > 1){
+        btn.closest(".item-row").remove();
+    }
+}
+
+function adaItemTerpilih(sectionId){
+    const rows = document.querySelectorAll(`#${sectionId} .item-row`);
+    for(const row of rows){
+        const qty = parseInt(row.querySelector(".qty select").value) || 0;
+        const item = row.querySelector(".item select").value;
+        if(qty > 0 && item) return true;
+    }
+    return false;
+}
+
+function formatRupiah(angka){
+    return "Rp " + angka.toLocaleString("id-ID") + ",-";
+}
+
+// =============== FORMAT ONGKIR INPUT ===============
+document.getElementById('ongkirInput').addEventListener('input', function(e) {
+    let value = e.target.value.replace(/\D/g, '');
+    
+    if (value) {
+        value = parseInt(value, 10).toLocaleString('id-ID');
+        e.target.value = value;
+    } else {
+        e.target.value = '';
+    }
+});
+
+// =============== MODAL PAKET FUNCTIONS ===============
+function showPaketModal(type) {
+    currentModalType = type;
+    currentSlideIndex = 0;
+    
+    const modal = document.getElementById('modalPaket');
+    const loading = document.getElementById('modalLoading');
+    const content = document.getElementById('modalContent');
+    
+    modal.style.display = 'flex';
+    loading.style.display = 'block';
+    content.style.display = 'none';
+    
+    // Load data paket dari API
+    loadPaketData(type);
+}
+
+function closeModal() {
+    document.getElementById('modalPaket').style.display = 'none';
+    modalPaketData = [];
+}
+
+async function loadPaketData(type) {
+    const sheetName = type === 'siap' ? 'PAKET_SIAP' : 'PAKET_SELF';
+    
+    try {
+        const res = await fetch(`${API_BASE}?sheet=${sheetName}`);
+        const data = await res.json();
+        
+        modalPaketData = data.filter(item => item.status === 'aktif');
+        
+        if (modalPaketData.length > 0) {
+            showSlide(0);
+        } else {
+            document.getElementById('modalLoading').innerHTML = 'Tidak ada paket tersedia';
+        }
+    } catch (error) {
+        console.error('Error loading paket:', error);
+        document.getElementById('modalLoading').innerHTML = 'Error memuat paket';
+    }
+}
+
+function showSlide(index) {
+    if (modalPaketData.length === 0) return;
+    
+    currentSlideIndex = index;
+    const item = modalPaketData[index];
+    
+    // Update image
+    document.getElementById('sliderImage').src = item.gambar_url || 'https://via.placeholder.com/300x200/4bcfe1/fff?text=Paket+Laundry';
+    
+    // Update WA button
+    document.getElementById('btnPilihPaket').dataset.waMessage = item.wa_template || `Halo, saya mau pesan ${item.nama_paket}`;
+    
+    // Update dots
+    const dotsContainer = document.getElementById('slideDots');
+    dotsContainer.innerHTML = '';
+    
+    for (let i = 0; i < modalPaketData.length; i++) {
+        const dot = document.createElement('div');
+        dot.className = `slider-dot ${i === index ? 'active' : ''}`;
+        dot.onclick = () => showSlide(i);
+        dotsContainer.appendChild(dot);
+    }
+    
+    // Show content
+    document.getElementById('modalLoading').style.display = 'none';
+    document.getElementById('modalContent').style.display = 'block';
+}
+
+function prevSlide() {
+    if (modalPaketData.length === 0) return;
+    currentSlideIndex = (currentSlideIndex - 1 + modalPaketData.length) % modalPaketData.length;
+    showSlide(currentSlideIndex);
+}
+
+function nextSlide() {
+    if (modalPaketData.length === 0) return;
+    currentSlideIndex = (currentSlideIndex + 1) % modalPaketData.length;
+    showSlide(currentSlideIndex);
+}
+
+function pilihPaketIni() {
+    const waMessage = document.getElementById('btnPilihPaket').dataset.waMessage;
+    const waUrl = `https://api.whatsapp.com/send?phone=628999191099&text=${encodeURIComponent(waMessage)}`;
+    window.open(waUrl, '_blank');
+    closeModal();
+}
+
+// =============== KIRIM WHATSAPP DENGAN CONFIG CODE ===============
+async function kirimWhatsApp() {
+    // Validasi wajib
+    if (!adaItemTerpilih("mesin-cuci")) {
+        alert("Silahkan pilih minimal 1 mesin cuci");
+        return;
+    }
+    if (!adaItemTerpilih("mesin-pengering")) {
+        alert("Silahkan pilih minimal 1 mesin pengering");
+        return;
+    }
+    
+    // Kumpulkan data config
+    const configData = collectConfigData();
+    
+    try {
+        // Simpan config ke spreadsheet & dapatkan short code
+        const response = await fetch(`${API_BASE}?action=save-config`, {
+            method: 'POST',
+            body: JSON.stringify({ config: configData })
+        });
+        
+        const result = await response.json();
+        const shortCode = result.code;
+        currentConfigCode = shortCode;
+        
+        // Generate WhatsApp message dengan format baru
+        const waMessage = generateWAMessage(configData, shortCode);
+        const waUrl = `https://api.whatsapp.com/send?phone=628999191099&text=${encodeURIComponent(waMessage)}`;
+        
+        window.open(waUrl, '_blank');
+        
+    } catch (error) {
+        console.error('Error saving config:', error);
+        // Fallback ke cara lama jika error
+        const waMessage = generateWAMessage(configData, null);
+        const waUrl = `https://api.whatsapp.com/send?phone=628999191099&text=${encodeURIComponent(waMessage)}`;
+        window.open(waUrl, '_blank');
+    }
+}
+
+function collectConfigData() {
+    const config = {
+        items: [],
+        ongkir: document.getElementById('ongkirInput').value.replace(/\./g, ''),
+        promo: document.getElementById('kodePromoInput').value,
+        total: document.getElementById('totalHarga').innerText,
+        timestamp: new Date().toISOString()
+    };
+    
+    // Kumpulkan semua item dari semua section
+    const sections = ['mesin-cuci', 'mesin-pengering', 'stacked-rack', 'os', 'instalasi', 'penunjang-inst', 'penunjang-prod'];
+    
+    sections.forEach(sectionId => {
+        const rows = document.querySelectorAll(`#${sectionId} .item-row`);
+        
+        rows.forEach(row => {
+            const qty = row.querySelector('.qty select').value;
+            const select = row.querySelector('.item select');
+            const opt = select.options[select.selectedIndex];
+            
+            if (opt && opt.value && !opt.disabled) { // Hanya item aktif (tidak disabled)
+                config.items.push({
+                    section: sectionId,
+                    id: opt.value,
+                    qty: qty,
+                    name: opt.textContent.replace(' (OSS)', ''), // Hilangkan label OSS
+                    satuan: opt.dataset.satuan || 'unit'
+                });
+            }
+        });
+    });
+    
+    return config;
+}
+
+function generateWAMessage(configData, shortCode) {
+    let pesan = `Halo, saya sudah melakukan simulasi paket laundry dengan rincian berikut:\n\n`;
+    
+    // Group items by section dengan emoji berbeda
+    const sectionConfig = {
+        'mesin-cuci': { emoji: '📦', name: 'MESIN CUCI' },
+        'mesin-pengering': { emoji: '📦', name: 'MESIN PENGERING' },
+        'stacked-rack': { emoji: '📦', name: 'STACKED RACK' },
+        'os': { emoji: '📦', name: 'SISTEM OPERASI' },
+        'instalasi': { emoji: '📦', name: 'PAKET INSTALASI' },
+        'penunjang-inst': { emoji: '📦', name: 'PENUNJANG INSTALASI' },
+        'penunjang-prod': { emoji: '📦', name: 'PENUNJANG PRODUKSI' }
+    };
+    
+    const sectionOrder = ['mesin-cuci', 'mesin-pengering', 'stacked-rack', 'os', 'instalasi', 'penunjang-inst', 'penunjang-prod'];
+    
+    sectionOrder.forEach(sectionId => {
+        const sectionItems = configData.items.filter(item => item.section === sectionId);
+        
+        if (sectionItems.length > 0) {
+            const section = sectionConfig[sectionId];
+            pesan += `${section.emoji} ${section.name}:\n`;
+            
+            sectionItems.forEach(item => {
+                // Format: [spasi][spasi]jumlah satuan nama_produk
+                pesan += `  ${item.qty} ${item.satuan} ${item.name}\n`;
+            });
+            
+            pesan += `\n`;
+        }
+    });
+    
+    // Ongkir
+    if (configData.ongkir) {
+        const ongkirNum = parseInt(configData.ongkir) || 0;
+        if (ongkirNum > 0) {
+            pesan += `🚚 ACOMODASI & ONGKIR: Rp ${ongkirNum.toLocaleString('id-ID')}\n\n`;
+        }
+    }
+    
+    // Promo
+    if (configData.promo) {
+        pesan += `🎟️ KODE PROMO: ${configData.promo}\n\n`;
+    }
+    
+    // Total dengan bold effect (pakai asterisk)
+    pesan += `💰 *TOTAL PAKET: ${configData.total}*\n\n`;
+    
+    // Link edit dengan format baru
+    if (shortCode) {
+        pesan += `✏️ KLIK link dibawah ini untuk merubah KONFIGURASI PAKET:\n`;
+        pesan += `https://simulasi.bisabikinlaundry.com/?config=${shortCode}\n\n`;
+    }
+    
+    pesan += `Mohon dibantu untuk detail lebih lanjut.\nTerima kasih! 🙏`;
+    
+    return pesan;
+}
+
+// =============== LOAD CONFIG DARI URL ===============
+async function loadConfigFromURL() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const configCode = urlParams.get('config');
+    
+    if (!configCode) return;
+    
+    try {
+        const response = await fetch(`${API_BASE}?action=load-config&code=${configCode}`);
+        const configData = await response.json();
+        
+        if (configData.error) {
+            console.error('Error loading config:', configData.error);
+            return;
+        }
+        
+        // Auto-fill form dengan config data
+        autoFillForm(configData);
+        currentConfigCode = configCode;
+        
+    } catch (error) {
+        console.error('Error loading config:', error);
+    }
+}
+
+function autoFillForm(configData) {
+    // Clear semua form dulu
+    clearAllForms();
+    
+    // Fill items berdasarkan section
+    if (configData.items && Array.isArray(configData.items)) {
+        configData.items.forEach(item => {
+            const section = document.getElementById(item.section);
+            if (section) {
+                // Cari atau buat row baru
+                const rows = section.querySelectorAll('.item-row');
+                let targetRow = rows[0];
+                
+                // Jika row pertama sudah terisi, buat row baru
+                if (rows[0].querySelector('.item select').value !== '') {
+                    addItem(item.section);
+                    const newRows = section.querySelectorAll('.item-row');
+                    targetRow = newRows[newRows.length - 1];
+                }
+                
+                // Set values
+                const qtySelect = targetRow.querySelector('.qty select');
+                const itemSelect = targetRow.querySelector('.item select');
+                
+                qtySelect.value = item.qty || '1';
+                
+                // Cari option dengan value yang sesuai
+                for (let i = 0; i < itemSelect.options.length; i++) {
+                    if (itemSelect.options[i].value == item.id) {
+                        itemSelect.selectedIndex = i;
+                        break;
+                    }
+                }
+            }
+        });
+    }
+    
+    // Fill ongkir
+    if (configData.ongkir) {
+        const ongkirNum = parseInt(configData.ongkir);
+        if (!isNaN(ongkirNum) && ongkirNum > 0) {
+            document.getElementById('ongkirInput').value = ongkirNum.toLocaleString('id-ID');
+        }
+    }
+    
+    // Fill promo
+    if (configData.promo) {
+        document.getElementById('kodePromoInput').value = configData.promo;
+    }
+}
+
+function clearAllForms() {
+    // Clear semua select item
+    document.querySelectorAll('.item select').forEach(select => {
+        select.selectedIndex = 0;
+    });
+    
+    // Clear semua quantity
+    document.querySelectorAll('.qty select').forEach(select => {
+        select.selectedIndex = 0;
+    });
+    
+    // Clear input fields
+    document.getElementById('ongkirInput').value = '';
+    document.getElementById('kodePromoInput').value = '';
+}
+
+// =============== PERHITUNGAN TOTAL ===============
+function hitungSection(sectionId, sheetName){
+    let subtotal = 0;
+    const rows = document.querySelectorAll(`#${sectionId} .item-row`);
+
+    rows.forEach(row => {
+        const qty = parseInt(row.querySelector(".qty select").value) || 0;
+        const select = row.querySelector(".item select");
+        const opt = select.options[select.selectedIndex];
+        if(!opt || !opt.value || opt.disabled) return; // Skip OSS items (disabled)
+
+        const kodePromo = document.getElementById('kodePromoInput')
+            ?.value
+            ?.trim()
+            ?.toLowerCase()
+            ?.replace(/\s+/g, '');
+
+        let harga = 0;
+        const itemId = opt.value;
+        const itemData = dataSemuaSheet[sheetName]?.find(item => item.id == itemId);
+
+        if(itemData){
+            // Cek harga berdasarkan kode promo
+            if(kodePromo && itemData[kodePromo]){
+                harga = parseInt(itemData[kodePromo]) || 0;
+            } else {
+                harga = parseInt(itemData.harga_normal || 0);
+            }
+        }
+
+        subtotal += qty * harga;
+    });
+
+    return subtotal;
+}
+
+document.getElementById("btnHitung").addEventListener("click", function(){
+    // Validasi wajib
+    if(!adaItemTerpilih("mesin-cuci")){
+        alert("Silahkan pilih minimal 1 mesin cuci");
+        return;
+    }
+
+    if(!adaItemTerpilih("mesin-pengering")){
+        alert("Silahkan pilih minimal 1 mesin pengering");
+        return;
+    }
+
+    let total = 0;
+    
+    // Hitung semua section
+    total += hitungSection("mesin-cuci", "MESIN_CUCI");
+    total += hitungSection("mesin-pengering", "MESIN_DRYER");
+    total += hitungSection("stacked-rack", "RAK_MESIN");
+    total += hitungSection("os", "SISTEM_OPERASI");
+    total += hitungSection("instalasi", "INSTALASI");
+    total += hitungSection("penunjang-inst", "PENUNJANG_INSTALASI");
+    total += hitungSection("penunjang-prod", "PENUNJANG_PRODUKSI");
+
+    // Tambah ongkir
+    const ongkirInput = document.getElementById('ongkirInput');
+    if(ongkirInput && ongkirInput.value){
+        const ongkirValue = ongkirInput.value.replace(/\./g, '');
+        total += parseInt(ongkirValue) || 0;
+    }
+
+    // Tampilkan total
+    document.getElementById("totalHarga").innerText = formatRupiah(total);
+    
+    // Tampilkan alert
+    alert("Total paket telah dihitung! Silahkan klik KIRIM DRAFT KONFIGURASI PAKET untuk berkonsultasi via Whatsapp");
+    
+    // Ubah tombol jadi hitung ulang jika belum pernah
+    if(!sudahDihitung) {
+        const btn = document.getElementById("btnHitung");
+        btn.textContent = "Hitung Ulang Total Paket";
+        btn.classList.add("recalculate");
+        sudahDihitung = true;
+    }
+});
+
+// =============== RENDER SECTIONS DINAMIS ===============
+const sections = [
+    ["mesin-pengering", "KONFIGURASI MESIN PENGERING", "Pilih mesin dryer yang diinginkan"],
+    ["stacked-rack", "STACKED RACK", "Pilih tipe rak mesin yang diinginkan"],
+    ["os", "OS (OPERATING SYSTEM)", "Pilih sistem pengoperasian mesin"],
+    ["instalasi", "PAKET INSTALASI MESIN", "Pilih tipe instalasi"],
+    ["penunjang-inst", "PENUNJANG INSTALASI", "Kebutuhan penunjang instalasi"],
+    ["penunjang-prod", "PENUNJANG PRODUKSI", "Kebutuhan penunjang produksi"]
+];
+
+function renderSections(){
+    const container = document.getElementById("dynamic-sections");
+    sections.forEach(s => {
+        const sectionHTML = `
+<div class="section" id="${s[0]}">
+<div class="section-title">${s[1]}</div>
+<div class="section-desc">${s[2]}</div>
+<div class="item-list">
+<div class="item-row">
+<div class="qty"><select>${qtyOptions()}</select></div>
+<div class="item">
+    <select class="select-item">
+        <option value="">--Pilih Item--</option>
+    </select>
+</div>
+<div class="delete"><button class="btn-delete" onclick="deleteItem(this)">X</button></div>
+</div>
+</div>
+<button class="btn-add" onclick="addItem('${s[0]}')">+ Tambah Item</button>
+</div>
+`;
+        container.innerHTML += sectionHTML;
+    });
+}
+
+renderSections();
+
+// =============== LOAD DATA DARI API (FIX OSS - Client Side Filter) ===============
+async function loadData(sheetName){
+    try{
+        const res = await fetch(`${API_BASE}?sheet=${sheetName}`);
+        const data = await res.json();
+        dataSemuaSheet[sheetName] = data;
+        
+        // Tentukan section ID berdasarkan sheet name
+        let sectionId;
+        switch(sheetName) {
+            case "MESIN_CUCI": sectionId = "mesin-cuci"; break;
+            case "MESIN_DRYER": sectionId = "mesin-pengering"; break;
+            case "RAK_MESIN": sectionId = "stacked-rack"; break;
+            case "SISTEM_OPERASI": sectionId = "os"; break;
+            case "INSTALASI": sectionId = "instalasi"; break;
+            case "PENUNJANG_INSTALASI": sectionId = "penunjang-inst"; break;
+            case "PENUNJANG_PRODUKSI": sectionId = "penunjang-prod"; break;
+        }
+        
+        if(!sectionId) return;
+        
+        document.querySelectorAll(`#${sectionId} .item select`).forEach(select => {
+            select.innerHTML = `<option value="">--Pilih Item--</option>`;
+            
+            // Urutkan: aktif dulu, baru OSS
+            const aktifItems = data.filter(item => item.status && item.status.toLowerCase() === "aktif");
+            const ossItems = data.filter(item => !item.status || item.status.toLowerCase() !== "aktif");
+            
+            // Tambah item aktif
+            aktifItems.forEach(item => {
+                const opt = document.createElement("option");
+                opt.value = item.id;
+                opt.textContent = item.nama_produk;
+                
+                // Simpan semua data ke dataset
+                Object.keys(item).forEach(key => {
+                    if(key !== "id" && key !== "nama_produk" && key !== "status") {
+                        opt.dataset[key] = item[key];
+                    }
+                });
+                
+                select.appendChild(opt);
+            });
+            
+            // Tambah separator jika ada OSS items
+            if (ossItems.length > 0 && aktifItems.length > 0) {
+                const separator = document.createElement("option");
+                separator.disabled = true;
+                separator.textContent = "────────── OUT OF STOCK ──────────";
+                select.appendChild(separator);
+            }
+            
+            // Tambah OSS items
+            ossItems.forEach(item => {
+                const opt = document.createElement("option");
+                opt.value = item.id;
+                opt.textContent = item.nama_produk + " (OSS)";
+                opt.disabled = true;
+                opt.style.color = "#999";
+                opt.style.backgroundColor = "#f5f5f5";
+                opt.style.fontStyle = "italic";
+                
+                // Simpan data untuk harga (jika ada)
+                Object.keys(item).forEach(key => {
+                    if(key !== "id" && key !== "nama_produk" && key !== "status") {
+                        opt.dataset[key] = item[key];
+                    }
+                });
+                
+                select.appendChild(opt);
+            });
+        });
+    }catch(e){
+        console.error(`Gagal load data ${sheetName}:`, e);
+    }
+}
+
+// =============== INITIALIZE ===============
+window.addEventListener('DOMContentLoaded', function() {
+    // Load data produk
+    loadData("MESIN_CUCI");
+    loadData("MESIN_DRYER");
+    loadData("RAK_MESIN");
+    loadData("SISTEM_OPERASI");
+    loadData("INSTALASI");
+    loadData("PENUNJANG_INSTALASI");
+    loadData("PENUNJANG_PRODUKSI");
+    
+    // Load config dari URL jika ada
+    loadConfigFromURL();
+});
+
+// Close modal dengan ESC key
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closeModal();
+    }
+});
+</script>
+
+</body>
+</html>
