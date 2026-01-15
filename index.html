@@ -690,9 +690,18 @@ async function loadData(sheetName){
         document.querySelectorAll(`#${sectionId} .item select`).forEach(select => {
             select.innerHTML = '<option value="">--Pilih Item--</option>';
             
-            // Urutkan: aktif dulu, baru OSS
-            const aktifItems = data.filter(item => item.status && item.status.toLowerCase() === "aktif");
-            const ossItems = data.filter(item => !item.status || item.status.toLowerCase() !== "aktif");
+            // Filter dengan handling case sensitive dan berbagai kemungkinan status
+            const aktifItems = data.filter(item => {
+                if (!item.status) return false;
+                const status = String(item.status).toLowerCase().trim();
+                return status === "aktif" || status === "active" || status === "tersedia";
+            });
+            
+            const ossItems = data.filter(item => {
+                if (!item.status) return false; // jika tidak ada status, jangan tampilkan
+                const status = String(item.status).toLowerCase().trim();
+                return status === "oss" || status === "out of stock" || status === "habis" || status === "kosong";
+            });
             
             // Tambah item aktif
             aktifItems.forEach(item => {
@@ -718,7 +727,7 @@ async function loadData(sheetName){
                 select.appendChild(separator);
             }
             
-            // Tambah OSS items
+            // Tambah OSS items (jika ada)
             ossItems.forEach(item => {
                 const opt = document.createElement("option");
                 opt.value = item.id;
