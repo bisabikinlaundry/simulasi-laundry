@@ -123,7 +123,7 @@ select option:disabled {
     </div>
 </div>
 
-<!-- SECTION TEMPLATE -->
+<!-- SECTION MESIN CUCI -->
 <div class="section" id="mesin-cuci">
 <div class="section-title">KONFIGURASI MESIN CUCI</div>
 <div class="section-desc">Pilih mesin cuci sesuai kapasitas yang diinginkan</div>
@@ -144,8 +144,131 @@ select option:disabled {
 <button class="btn-add" onclick="addItem('mesin-cuci')">+ Tambah Item</button>
 </div>
 
-<!-- Sections lainnya akan dibuat oleh JavaScript -->
-<div id="dynamic-sections"></div>
+<!-- SECTION MESIN PENGERING -->
+<div class="section" id="mesin-pengering">
+<div class="section-title">KONFIGURASI MESIN PENGERING</div>
+<div class="section-desc">Pilih mesin dryer yang diinginkan</div>
+<div class="item-list">
+<div class="item-row">
+<div class="qty"><select>
+        <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+        <option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
+    </select></div>
+<div class="item">
+    <select class="select-item">
+        <option value="">--Pilih Item--</option>
+    </select>
+</div>
+<div class="delete"><button class="btn-delete" onclick="deleteItem(this)">X</button></div>
+</div>
+</div>
+<button class="btn-add" onclick="addItem('mesin-pengering')">+ Tambah Item</button>
+</div>
+
+<!-- SECTION STACKED RACK -->
+<div class="section" id="stacked-rack">
+<div class="section-title">STACKED RACK</div>
+<div class="section-desc">Pilih tipe rak mesin yang diinginkan</div>
+<div class="item-list">
+<div class="item-row">
+<div class="qty"><select>
+        <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+        <option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
+    </select></div>
+<div class="item">
+    <select class="select-item">
+        <option value="">--Pilih Item--</option>
+    </select>
+</div>
+<div class="delete"><button class="btn-delete" onclick="deleteItem(this)">X</button></div>
+</div>
+</div>
+<button class="btn-add" onclick="addItem('stacked-rack')">+ Tambah Item</button>
+</div>
+
+<!-- SECTION OS (OPERATING SYSTEM) -->
+<div class="section" id="os">
+<div class="section-title">OS (OPERATING SYSTEM)</div>
+<div class="section-desc">Pilih sistem pengoperasian mesin</div>
+<div class="item-list">
+<div class="item-row">
+<div class="qty"><select>
+        <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+        <option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
+    </select></div>
+<div class="item">
+    <select class="select-item">
+        <option value="">--Pilih Item--</option>
+    </select>
+</div>
+<div class="delete"><button class="btn-delete" onclick="deleteItem(this)">X</button></div>
+</div>
+</div>
+<button class="btn-add" onclick="addItem('os')">+ Tambah Item</button>
+</div>
+
+<!-- SECTION PAKET INSTALASI MESIN -->
+<div class="section" id="instalasi">
+<div class="section-title">PAKET INSTALASI MESIN</div>
+<div class="section-desc">Pilih tipe instalasi</div>
+<div class="item-list">
+<div class="item-row">
+<div class="qty"><select>
+        <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+        <option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
+    </select></div>
+<div class="item">
+    <select class="select-item">
+        <option value="">--Pilih Item--</option>
+    </select>
+</div>
+<div class="delete"><button class="btn-delete" onclick="deleteItem(this)">X</button></div>
+</div>
+</div>
+<button class="btn-add" onclick="addItem('instalasi')">+ Tambah Item</button>
+</div>
+
+<!-- SECTION PENUNJANG INSTALASI -->
+<div class="section" id="penunjang-inst">
+<div class="section-title">PENUNJANG INSTALASI</div>
+<div class="section-desc">Kebutuhan penunjang instalasi</div>
+<div class="item-list">
+<div class="item-row">
+<div class="qty"><select>
+        <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+        <option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
+    </select></div>
+<div class="item">
+    <select class="select-item">
+        <option value="">--Pilih Item--</option>
+    </select>
+</div>
+<div class="delete"><button class="btn-delete" onclick="deleteItem(this)">X</button></div>
+</div>
+</div>
+<button class="btn-add" onclick="addItem('penunjang-inst')">+ Tambah Item</button>
+</div>
+
+<!-- SECTION PENUNJANG PRODUKSI -->
+<div class="section" id="penunjang-prod">
+<div class="section-title">PENUNJANG PRODUKSI</div>
+<div class="section-desc">Kebutuhan penunjang produksi</div>
+<div class="item-list">
+<div class="item-row">
+<div class="qty"><select>
+        <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+        <option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
+    </select></div>
+<div class="item">
+    <select class="select-item">
+        <option value="">--Pilih Item--</option>
+    </select>
+</div>
+<div class="delete"><button class="btn-delete" onclick="deleteItem(this)">X</button></div>
+</div>
+</div>
+<button class="btn-add" onclick="addItem('penunjang-prod')">+ Tambah Item</button>
+</div>
 
 <div class="section">
 <div class="section-title">AKOMODASI & ONGKIR</div>
@@ -629,44 +752,7 @@ document.getElementById("btnHitung").addEventListener("click", function(){
     }
 });
 
-// =============== RENDER SECTIONS DINAMIS ===============
-const sections = [
-    ["mesin-pengering", "KONFIGURASI MESIN PENGERING", "Pilih mesin dryer yang diinginkan"],
-    ["stacked-rack", "STACKED RACK", "Pilih tipe rak mesin yang diinginkan"],
-    ["os", "OS (OPERATING SYSTEM)", "Pilih sistem pengoperasian mesin"],
-    ["instalasi", "PAKET INSTALASI MESIN", "Pilih tipe instalasi"],
-    ["penunjang-inst", "PENUNJANG INSTALASI", "Kebutuhan penunjang instalasi"],
-    ["penunjang-prod", "PENUNJANG PRODUKSI", "Kebutuhan penunjang produksi"]
-];
-
-function renderSections(){
-    const container = document.getElementById("dynamic-sections");
-    sections.forEach(s => {
-        const sectionHTML = `
-<div class="section" id="${s[0]}">
-<div class="section-title">${s[1]}</div>
-<div class="section-desc">${s[2]}</div>
-<div class="item-list">
-<div class="item-row">
-<div class="qty"><select>${qtyOptions()}</select></div>
-<div class="item">
-    <select class="select-item">
-        <option value="">--Pilih Item--</option>
-    </select>
-</div>
-<div class="delete"><button class="btn-delete" onclick="deleteItem(this)">X</button></div>
-</div>
-</div>
-<button class="btn-add" onclick="addItem('${s[0]}')">+ Tambah Item</button>
-</div>
-`;
-        container.innerHTML += sectionHTML;
-    });
-}
-
-renderSections();
-
-// =============== LOAD DATA DARI API (FIX OSS - SIMPLE VERSION) ===============
+// =============== LOAD DATA DARI API ===============
 async function loadData(sheetName){
     try{
         const res = await fetch(`${API_BASE}?sheet=${sheetName}`);
@@ -690,18 +776,53 @@ async function loadData(sheetName){
         document.querySelectorAll(`#${sectionId} .item select`).forEach(select => {
             select.innerHTML = '<option value="">--Pilih Item--</option>';
             
-            // DEBUG: Tampilkan data di console
-            console.log(`${sheetName} data:`, data);
-            
-            // Loop semua data dengan logic sederhana
+            // Loop semua data
             data.forEach(item => {
                 const opt = document.createElement("option");
                 opt.value = item.id;
                 opt.textContent = item.nama_produk || item.nama || 'No Name';
                 
-                // Check status - SIMPLE LOGIC
+                // Check status
                 const status = String(item.status || '').toLowerCase().trim();
                 
                 if (status === 'oss' || status.includes('out') || status === 'habis' || status === 'kosong') {
                     // ITEM OSS
-                    opt.disabled
+                    opt.disabled = true;
+                    opt.textContent += ' (OSS)';
+                }
+                
+                opt.dataset.satuan = item.satuan || 'unit';
+                select.appendChild(opt);
+            });
+        });
+        
+    } catch(error){
+        console.error(`Error loading ${sheetName}:`, error);
+        alert(`Gagal memuat data ${sheetName}. Coba refresh halaman.`);
+    }
+}
+
+// =============== LOAD ALL DATA ON PAGE LOAD ===============
+document.addEventListener("DOMContentLoaded", function(){
+    // Load semua data dari sheet
+    const sheets = [
+        "MESIN_CUCI",
+        "MESIN_DRYER", 
+        "RAK_MESIN",
+        "SISTEM_OPERASI",
+        "INSTALASI",
+        "PENUNJANG_INSTALASI",
+        "PENUNJANG_PRODUKSI"
+    ];
+    
+    sheets.forEach(sheet => {
+        loadData(sheet);
+    });
+    
+    // Load config dari URL jika ada
+    loadConfigFromURL();
+});
+</script>
+
+</body>
+</html>
